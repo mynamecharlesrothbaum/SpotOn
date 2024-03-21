@@ -126,6 +126,28 @@ public class MyMavlinkWork implements Runnable {
         }
     }
 
+    public void armDisarm(boolean arm) {
+        // 1 to arm, 0 to disarm
+        float armParam = arm ? 1 : 0;
+        float forceArm = 21196; // Set to 21196 if needed
+
+        CommandLong armCommand = CommandLong.builder()
+                .targetSystem(255)
+                .targetComponent(0)
+                .command(MavCmd.MAV_CMD_COMPONENT_ARM_DISARM)
+                .confirmation(0)
+                .param1(armParam)
+                .param2(forceArm)
+                .build();
+        try {
+            mav_conn.send1(255, 0, armCommand);
+            if (MyAppConfig.DEBUG) Log.d("chobits", "Sent arm command: " + arm);
+        } catch (IOException e) {
+            if (MyAppConfig.DEBUG) Log.e("chobits", "Failed to send arm/disarm command", e);
+        }
+    }
+
+
     @Override
     public void run() {
         MavlinkMessage msg;

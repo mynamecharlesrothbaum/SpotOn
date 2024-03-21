@@ -26,6 +26,7 @@ public class ArduCopter extends Vehicle {
         return SetMode.builder().baseMode(MavModeFlag.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED).customMode(6).build();
     }
 
+
     @Override
     public String Name() {
         return "ArduCopter";
